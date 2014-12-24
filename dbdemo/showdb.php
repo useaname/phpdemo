@@ -14,7 +14,7 @@ if($link){
 	//var_dump($res);
 	echo "Database<br/>";
 	while ($row = mysql_fetch_array($res)) {
-		echo "<a href='table.php?dbName={$row['Database']}' > {$row['Database']}  </a> | 结构 | 定义 <br />";
+		echo "<a href='table.php?dbName={$row['Database']}' > {$row['Database']}  </a><br />";
 	}
 	mysql_free_result($res);
 	mysql_close($link);

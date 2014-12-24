@@ -33,7 +33,7 @@ echo "<table border='1'>";
 while ($row = mysql_fetch_assoc($res)) {
 	echo "<tr>";
 	echo "<td>";
-	echo "{$row['Tables_in_'.$dbName]}";
+	echo "{$row['Tables_in_'.$dbName]} |"."<a href='desc.php?tbName={$row['Tables_in_'.$dbName]}&dbName=$dbName' >结构</a> | <a href='select.php?tbName={$row['Tables_in_'.$dbName]}&dbName=$dbName' >数据</a>";
 	echo "</td>";
 	echo "</tr>";
 }
