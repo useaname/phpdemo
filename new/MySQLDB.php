@@ -48,7 +48,7 @@ class DB{
 			echo 'DBFAIL 3<br>';
 			echo mysql_errno(),mysql_error();
 			die();
-		}	
+		}
 	}
 
 	// private function exeSQL(){
@@ -74,8 +74,6 @@ class DB{
 		}
 	}
 
-
-
 	public function fetchAll(){
 		if($res = $this->exeSQL()){
 			$rows = array();
@@ -88,8 +86,47 @@ class DB{
 			return false;
 		}
 	}
+
+	/**
+	*
+	*
+	* 利用一条sql 返回符合条件的第一条记录
+	*
+	*@param 	$sql 待执行的sql
+	*
+	*@return array 一堆数组
+	*/
+
+	public function fetchRow(){
+		$res = $this->exeSQL();
+		if($res){
+			$row = mysql_fetch_assoc($res);
+			mysql_free_result($res);
+			return $row;
+		}else{
+			return false;
+		}
+	}
+
+	/**
+	*利用一条sql 返回符合条件的第一条记录第一个字段的值
+	*@param $sql 待执行的sql
+	*@return  $row[0] 记录中第一个字段值
+	*/
+	public function fetchColum($sql){
+		if ($res = $this->exeSQL()) {
+			if ($row = mysql_fetch_assoc($res)) {
+				mysql_free_result($res);
+				return $row[0];
+			}else{
+				return false;
+			}
+
+		}else{
+			return false;
+		}
+	}
 }
-//echo 'aaaa';
 $db = new DB();
 echo '<pre>';
 //var_dump($db);
