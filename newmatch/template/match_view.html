@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- 显示部分，将php代码获得数据展示出来 -->
+<!-- 视图文件，模板充当-->
+<HTML>
+ <HEAD>
+  <TITLE> 班级列表 </TITLE>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8" />
+ </HEAD>
+ <BODY>
+
+ <h1>比赛概况表</h1>
+ <table>
+ <tr>
+ <th>选手1</th>
+ <th>选手2</th>
+ <th>比赛时间</th>
+ <th>结果</th>
+ </tr>
+<?php foreach($rows as $row) : ?>
+ <tr>
+ <td><?php echo $row['p1'];?></td>
+ <td><?php echo $row['p2'];?></td>
+ <td><?php echo $row['time'];?></td>
+ <td><?php echo $row['result'];?></td>
+ <td><a href="/newmatch/index.php?a=del&id=<?php echo $row['id'];?>">1删除</a></td>
+ </tr>
+<?php endForeach;?>
+ </table>
+
+ </BODY>
+</HTML>

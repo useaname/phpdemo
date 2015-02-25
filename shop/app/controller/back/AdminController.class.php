@@ -1,5 +1,5 @@
 <?php
-class AdminController{
+class AdminController extends Controller{
 
 	/**
 	 * 展示登陆页面
@@ -14,9 +14,12 @@ class AdminController{
 		//利用用户名 和 密码 验证用户身份
 		$model_admin = new AdminModel;
 		if ($model_admin->checkByLogin($_POST['username'],$_POST['password'])) {
-			echo '合法用户';
+			setcookie('is_login','yes');
+			//echo '合法用户';
+			$this->jump('index.php?p=back&c=Index&a=index');
 		}else{
-			echo '非法用户';
+			//echo '非法用户';
+			$this->jump('index.php?p=back&c=Admin&a=index','非法用户',2);
 		}
 	}
 }
