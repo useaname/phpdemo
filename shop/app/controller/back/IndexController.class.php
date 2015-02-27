@@ -3,10 +3,15 @@
 class IndexController extends Controller{
 
 	public function indexAction(){
-		if (isset($_COOKIE['is_login']) && $_COOKIE['is_login'] == 'yes') {
+		//判断用户是否已经登陆
+		//if (isset($_COOKIE['is_login']) && $_COOKIE['is_login'] == 'yes') {
+		session_start();
+		if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == 'yes'){
 			# code...
 		}else{
-			die('没有登录');
+			//die('没有登录');
+			$this->jump('index.php?p=back&c=Admin&a=index','没有用户',5);
+			die();
 		}
 		require CURR_VIEW_DIR.'index.html';
 	}
