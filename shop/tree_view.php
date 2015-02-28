@@ -8,39 +8,41 @@
 // parent_id int unsigned
 // ) charset=utf8;
 
-mysql_connect('127.0.01:3306','root','root');
-$sql = "select * from demo_category where 1 order by sort_order";
-$result = mysql_query($sql);
-while ($row = mysql_fetch_assoc($result)) {
-	$list = $row;
+ mysql_connect('127.0.0.1:3306','root','root');
+ $list = mysql_query('select * from demo_shop.demo_category order by sort_order');
+
+while ($row = mysql_fetch_assoc($list)) {
+	$res[] = $row;
 }
 
-/**
- * [getTree description]
- * @param  [type]  $arr  当前所有可能的分类 在该数组哪查找分类
- * @param  [type]  $p_id [当前查找的父类ID
- * @param  integer $deep 当前递归调用的深度
- * @return [type] 排序好的数组列表
- */
-function getTree($arr,$p_id,$deep=0){
-	static $tree = array();
+echo '<pre>';
+//分类表中所有数据
+//var_dump($res);
+//得到简单分类列表
+var_dump(getTree($res,0,0));
+echo '</pre>';
 
-	foreach ($arr as $row) {
-		if($row['parent_id'] == $p_id){
-			$row['deep'] = $deep;
-			$tree[] = $row;
+ // function getTree($list,$pid=0,$deep=0){
+ // 	static $tree = array();
+ // 	foreach ($list as $row) {
+ // 		if ($pid == $row['parent_id']) {
+ // 			$row['deep'] = $deep;
+ // 			$tree[] = $row;
+ // 			getTree($list,$row['cat_id'],$deep+1);
+ // 		}
+ // 	}
+ // 	return $tree;
+ // }
+
+
+function getTree($arr,$pid=0,$deep){
+	static $tree = array();
+	foreach ($arr as $row ) {
+		if ($row['parent_id'] == $pid) {
+			$row['deep'] =$deep;
+			$tree[ ]= $row;
 			getTree($arr,$row['cat_id'],$deep+1);
 		}
 	}
-
 	return $tree;
-}
-
-$tree = getTree($list,0);
-
-foreach ($tree as $row) {
-	echo $row['deep'];
-	echo str_repeat('&nbsp;&nbsp;',$row['deep']);
-	echo $row['cat_name'];
-	echo '<br>';
 }
