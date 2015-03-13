@@ -30,7 +30,7 @@ var filter_attr_not_selected = "请选择筛选属性";
 <body>
 
 <h1>
-<span class="action-span"><a href="#">添加分类</a></span>
+<span class="action-span"><a href="/index.php?p=back&c=Category&a=add">添加分类</a></span>
 <span class="action-span1"><a href="index.php?act=main">ECSHOP 管理中心</a> </span><span id="search_id" class="action-span1"> - 商品分类 </span>
 <div style="clear:both"></div>
 </h1>
@@ -68,8 +68,8 @@ var filter_attr_not_selected = "请选择筛选属性";
     <!--
       <a href="category.php?act=move&cat_id=12">转移商品</a> |
       -->
-      <a href="category.php?act=edit&amp;cat_id=12">编辑</a> |
-      <a href="javascript:;" onclick="listTable.remove(12, '您确认要删除这条记录吗?')" title="移除">移除</a>
+      <a href="index.php?p=back&c=Category&a=edit&id=<?php echo $row['cat_id']?>" onclick="confrim('是否要编辑')">编辑</a> |
+      <a href="index.php?p=back&c=Category&a=del&id=<?php echo $row['cat_id']?>" onclick="return confrim('是否要删除:<?php echo $row["cat_name"]?>');" title="移除">移除</a>
     </td>
   <?php endforeach;?>
   </tr>

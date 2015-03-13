@@ -37,6 +37,7 @@ class Framework{
 		define('MODEL_DIR',APP_DIR.'model'.DS); //模型路径
 		define('FRAME_DIR', ROOT_DIR.'framework'.DS); //框架路径
 		define('CONFIG_DIR',APP_DIR.'config'.DS);//配置文件目录
+		define('TOOL_DIR', FRAME_DIR.'tool'.DS);//工具类目录
 	}
 
 	/**
@@ -59,6 +60,8 @@ class Framework{
 			require CURR_CONT_DIR.$class_name.'.class.php';
 		}elseif (substr($class_name,-5) == 'Model') {
 			require MODEL_DIR.$class_name.'.class.php';
+		}elseif (substr($class_name, -4)) {
+			require TOOL_DIR.$class_name.'.class.php';
 		}
 
 	}
