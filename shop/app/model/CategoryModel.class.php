@@ -80,13 +80,23 @@ class CategoryModel extends Model{
 		return $this->db->fetchRow($sql);
 	}
 
-	public function pdateCat($data){
+	public function updateCat($data){
+		//上级id不能为自己和后代ID
 		$child_list = $this->getList($data['cat_id']);
 		$ids = array($data['cat_id']);
 		foreach ($child_list as $row) {
-
+			$ids[] = $row['cat_id'];
 		}
 
-		$sql = "update demo_category "
+		if (in_array($data['parent_id'],$ids)) {
+			$this->error_info = '不能为自己或后带分类的字分类';
+			return false;
+		}
+
+		//echo $data['cat_id'];die();
+
+		$sql = "update demo_category set cat_name='{$data['cat_name']}',sort_order={$data['sort_order']},parent_id={$data['parent_id']} where cat_id={$data['cat_id']}";
+		return $this->db->query($sql);
 	}
+
 }
