@@ -1,11 +1,13 @@
 <?php
 class CategoryModel extends Model{
+
+           protected $table_name = 'category';
 	/**
 	 * 获取所有分类信息
 	 * @return 所有分类
 	 */
 	public function getList($p_id=0){
-		$sql = "select * from `demo_category` order by sort_order";
+		$sql = "select * from {$this->table()} order by sort_order";
 		$list = $this->db->fetchAll($sql);
 		//return $list;
 		$list =  $this->getTree($list,$p_id,0);
@@ -36,12 +38,13 @@ class CategoryModel extends Model{
 	 * @return bool
 	 */
 	public function delById($id){
-		if ($this->isLeaf($id) ){
+		if (!$this->isLeaf($id) ){
 			$this->error_info = '分类不是末级分类';
 			return false;
 		}
-		$sql = "delete from demo_category where `cat_id`=$id";
-		return $this->db->query($sql);
+		//$sql = "delete from {$this->table()}} where `cat_id`=$id";
+		//return $this->db->query($sql);
+		return $this->auotoDelete($id);
 	}
 
 	/**
@@ -49,7 +52,7 @@ class CategoryModel extends Model{
 	 * @return boolean         [description]
 	 */
 	public function isLeaf($cat_id){
-		$sql = "select count(*) from demo_category where parent_id=$cat_id";
+		$sql = "select count(*) from {$this->table()} where parent_id=$cat_id";
 		$child_count = $this->db->fetchColoum($sql);
 		return $child_count == 0;
 	}
@@ -64,20 +67,21 @@ class CategoryModel extends Model{
 			// return false;
 		}
 
-		$sql = "SELECT count(*) from demo_category where parent_id={$data['parent_id']} and cat_name='{$data['cat_name']}' ";
+		$sql = "SELECT count(*) from {$this->table()} where parent_id={$data['parent_id']} and cat_name='{$data['cat_name']}' ";
 
 		$cat_count = $this->db->fetchColoum($sql);
 		if ($cat_count > 0) {
 			$this->error_info = '分类已经存在';
 		}
 
-		$sql = "INSERT INTO `demo_category`(`cat_name`, `sort_order`, `parent_id`) VALUES ('{$data['cat_name']}','{$data['sort_order']}','{$data['parent_id']}')";
-		return $this->db->query($sql);
+		// $sql = "INSERT INTO `{$this->table()}`(`cat_name`, `sort_order`, `parent_id`) VALUES ('{$data['cat_name']}','{$data['sort_order']}','{$data['parent_id']}')";
+		// return $this->db->query($sql);
+		return $this->autoInsert($data);
 	}
 
 	public function getById($cat_id){
-		$sql = "select * from demo_category where cat_id='{$cat_id}'";
-		return $this->db->fetchRow($sql);
+		//$sql = "select * from {$this->table()} where cat_id='{$cat_id}'";
+		return $this->autoSelectRow($cat_id);
 	}
 
 	public function updateCat($data){
@@ -95,8 +99,9 @@ class CategoryModel extends Model{
 
 		//echo $data['cat_id'];die();
 
-		$sql = "update demo_category set cat_name='{$data['cat_name']}',sort_order={$data['sort_order']},parent_id={$data['parent_id']} where cat_id={$data['cat_id']}";
-		return $this->db->query($sql);
+		//$sql = "update {$this->table()} set cat_name='{$data['cat_name']}',sort_order={$data['sort_order']},parent_id={$data['parent_id']} where cat_id={$data['cat_id']}";
+		//return $this->db->query($sql);
+		return $this->autoUpdate($data);
 	}
 
 }

@@ -6,7 +6,8 @@ return array(
 		'user' => 'root',
 		'pass'=>'root',
 		'charset' => 'utf8',
-		'dbname' =>'demo_shop'
+		'dbname' =>'demo_shop',
+		'prefix' => 'demo_'
 		),
 	'app'=> array(),
 	'bakc'=>array(),
